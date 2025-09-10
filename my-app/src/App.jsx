@@ -5,6 +5,15 @@ import Welcome from './Components/WelcomeScreen/Welcome';
 import Menu from './Components/Menu/Menu';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './Components/Home/Home';
+import Login from './Components/Login/Login';
+
+
+ import Register from './Components/Register/Register';
+
+
+
+// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 
 // Create the router using Layout as the root
 const router = createBrowserRouter([
@@ -29,6 +38,15 @@ const router = createBrowserRouter([
         path: 'cart',
         element: <Cart />,
       },
+     {
+  path: 'register',
+  element: <Register />,
+},
+     {
+  path: 'Login',
+  element: <Login/>,
+},
+
     ],
   },
 ]);
