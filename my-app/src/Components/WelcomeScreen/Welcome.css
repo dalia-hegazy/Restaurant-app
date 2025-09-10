@@ -1,0 +1,118 @@
+/* Welcome.css */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: rgb(225, 131, 131); /* Your specified background color */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.fcard {
+  /* width: 100%; */
+  /* max-width: 500px; */
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); */
+  border-radius: 20px;
+  overflow: hidden;
+  text-align: center;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease ;
+  background-color: rgb(225, 131, 131); 
+  /* backdrop-filter: blur(5px); */
+}
+
+.fcard:hover {
+  transform: translateY(-5px);
+  /* box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); */
+}
+
+
+
+.welcome-img {
+  width: 288px;
+  height: 294px;
+
+  object-fit: cover;
+  border-radius: 50%; /* This makes it completely circular */
+  box-shadow: 50 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+}
+
+.fcard:hover .welcome-img {
+  transform: scale(1.02);
+}
+
+.welcome-title {
+  font-size: 2.5rem;
+  color: #fff; /* White text to contrast with background */
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.btn-container {
+  margin-top: 20px;
+}
+
+.welcome-btn {
+  background-color: rgb(243, 197, 197);
+  color:rgb(225, 131, 131);
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-btn:hover {
+  background-color:rgb(225, 131, 131);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+
+.welcome-btn:active {
+  transform: translateY(1px);
+}
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+  .welcome-title {
+    font-size: 2rem;
+  }
+  
+  .fcard {
+    max-width: 90%;
+  }
+  
+  .welcome-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .welcome-title {
+    font-size: 1.8rem;
+  }
+  
+  .welcome-btn {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+}
