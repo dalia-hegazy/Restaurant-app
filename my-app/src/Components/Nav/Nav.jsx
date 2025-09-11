@@ -17,10 +17,10 @@ export default function Nav() {
         </div>
         
         <div className={`nav-menu ${isMenuOpen ? "active" : ""}`}>
-          <a href="home" className="nav-link">Home</a>
+          <a href="welcome" className="nav-link">Home</a>
           <a href="menu" className="nav-link">Menu</a>
           <a href="#about" className="nav-link">About</a>
-          <a href="Regestartion" className="nav-link">Reservations</a>
+          <a href="reserve" className="nav-link">Reservations</a>
           <a href="#contact" className="nav-link">Contact</a>
           
           <div className="nav-icons">

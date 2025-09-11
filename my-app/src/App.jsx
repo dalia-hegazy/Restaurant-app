@@ -4,18 +4,19 @@ import Layout from './Components/Layout';
 import Welcome from './Components/WelcomeScreen/Welcome';
 import Menu from './Components/Menu/Menu';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './Components/Home/Home';
+// import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 
 
  import Register from './Components/Register/Register';
+import Reserve from './Components/Reserve/Reserve';
 
 
 
-// import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 
-// Create the router using Layout as the root
+
+// Create the router using Layout
 const router = createBrowserRouter([
   {
     path: '/',
@@ -23,17 +24,17 @@ const router = createBrowserRouter([
     errorElement: <div>Error Page</div>,
     children: [
       {
-        path: '',
+        path: 'welcome',
         element: <Welcome />
       },
       {
         path: 'menu',
         element: <Menu />,
       },
-      {
-        path: 'home',
-        element: <Home />,
-      },
+      // {
+      //   path: 'home',
+        // element: <Home />, //افتكري حطيناها في ال welcome
+      // },
       {
         path: 'cart',
         element: <Cart />,
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
      {
   path: 'Login',
   element: <Login/>,
+},
+     {
+  path: 'reserve',
+  element: <Reserve/>,
 },
 
     ],
