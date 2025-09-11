@@ -40,27 +40,6 @@
   color: #fff;
 }
 
-/* Promotions */
-.promotion {
-  position: relative;
-  background:rgb(225, 131, 131);;
-  border-radius: 20px;
-  padding: 20px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-.promo-text {
-  max-width: 60%;
-}
-.promo-img {
-  width: 120px;
-  position: absolute;
-  right: 10px;
-  bottom: -20px;
-}
 
 /* Popular */
 .section-title {
@@ -99,7 +78,7 @@
 }
 .promotion {
   position: relative;
-  background:rgb(225, 131, 131);
+  background: rgb(225, 131, 131) !important;
   border-radius: 16px;
   padding: 20px 30px;
   display: flex;
@@ -148,7 +127,7 @@
   height: auto;
   z-index: 1;
 
-  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); /* نفس شكل الصورة اللي بعتّيها */
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); 
   transition: transform 0.35s ease-in-out;
 }
 
