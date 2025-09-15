@@ -359,49 +359,235 @@
 
 
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import '../Menu/Menu.css'
 import pizza from '../../assets/imgs/pizza.png'
-import { FaSearch, FaStar } from "react-icons/fa";
+import { FaSearch, FaStar, FaPlus, FaHeart, FaShoppingCart } from "react-icons/fa";
 
 const Menu = () => {
-  const categories = ["All", "Pizza", "Burger", "Dessert"];
-  const popularItems = [
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [favorites, setFavorites] = useState(new Set());
+  const [cartItems, setCartItems] = useState([]);
+
+  const categories = ["All", "Pizza", "Burger", "Dessert", "Salads", "Beverages"];
+  
+  const menuItems = [
     {
       id: 1,
       name: "Pizza Margherita",
       price: "$32",
       rating: 4.8,
-      img: "/assets/imgs/pizza.png"
+      img: "/assets/imgs/pizza.png",
+      category: "Pizza",
+      description: "Classic Italian pizza with fresh mozzarella, tomato sauce, and basil",
+      popular: true
     },
     {
       id: 2,
       name: "Chicken and Vegetables",
       price: "$27",
       rating: 4.6,
-      img: "/assets/imgs/chicken.png"
+      img: "/assets/imgs/chicken.png",
+      category: "Burger",
+      description: "Grilled chicken breast with fresh vegetables and herbs",
+      popular: true
     },
     {
       id: 3,
       name: "French Fries",
       price: "$12",
       rating: 4.5,
-      img: "/assets/imgs/fries.png"
+      img: "/assets/imgs/fries.png",
+      category: "Burger",
+      description: "Crispy golden fries served with your choice of dipping sauce",
+      popular: true
+    },
+    {
+      id: 4,
+      name: "Chocolate Lava Cake",
+      price: "$18",
+      rating: 4.9,
+      img: "/assets/imgs/pizza.png",
+      category: "Dessert",
+      description: "Warm chocolate cake with molten center, served with vanilla ice cream",
+      popular: false
+    },
+    {
+      id: 5,
+      name: "Caesar Salad",
+      price: "$15",
+      rating: 4.3,
+      img: "/assets/imgs/pizza.png",
+      category: "Salads",
+      description: "Fresh romaine lettuce with parmesan cheese and croutons",
+      popular: false
+    },
+    {
+      id: 6,
+      name: "Fresh Orange Juice",
+      price: "$8",
+      rating: 4.7,
+      img: "/assets/imgs/pizza.png",
+      category: "Beverages",
+      description: "Freshly squeezed orange juice, served chilled",
+      popular: false
     }
   ];
 
+  const popularItems = menuItems.filter(item => item.popular);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Filter items based on category and search term
+  const filteredItems = menuItems.filter(item => {
+    const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleAddToCart = (item) => {
+    setCartItems(prev => [...prev, item]);
+    // Add visual feedback
+    const button = document.querySelector(`[data-item-id="${item.id}"]`);
+    if (button) {
+      button.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        button.style.transform = 'scale(1)';
+      }, 150);
+    }
+  };
+
+  const toggleFavorite = (itemId) => {
+    setFavorites(prev => {
+      const newFavorites = new Set(prev);
+      if (newFavorites.has(itemId)) {
+        newFavorites.delete(itemId);
+      } else {
+        newFavorites.add(itemId);
+      }
+      return newFavorites;
+    });
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Skeleton Loading Components
+  const SkeletonCard = () => (
+    <div className="skeleton-card">
+      <div className="skeleton-image"></div>
+      <div className="skeleton-content">
+        <div className="skeleton-title"></div>
+        <div className="skeleton-description"></div>
+        <div className="skeleton-footer">
+          <div className="skeleton-price"></div>
+          <div className="skeleton-button"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const SkeletonPopularCard = () => (
+    <div className="skeleton-popular-card">
+      <div className="skeleton-popular-image"></div>
+      <div className="skeleton-popular-content">
+        <div className="skeleton-popular-title"></div>
+        <div className="skeleton-popular-description"></div>
+        <div className="skeleton-popular-footer">
+          <div className="skeleton-popular-price"></div>
+          <div className="skeleton-popular-button"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading) {
+    return (
+      <div className="menu-page">
+        {/* Header */}
+        <div className="menu-header">
+          <h1>Our Menu</h1>
+          <p>Discover our delicious selection of dishes</p>
+        </div>
+
+        {/* Search Skeleton */}
+        <div className="search-bar skeleton-search">
+          <div className="skeleton-search-icon"></div>
+          <div className="skeleton-search-input"></div>
+        </div>
+
+        {/* Categories Skeleton */}
+        <div className="categories">
+          {[1, 2, 3, 4, 5, 6].map(i => (
+            <div key={i} className="skeleton-category"></div>
+          ))}
+        </div>
+
+        {/* Promotion Skeleton */}
+        <div className="skeleton-promotion">
+          <div className="skeleton-promo-content">
+            <div className="skeleton-promo-text"></div>
+            <div className="skeleton-promo-button"></div>
+          </div>
+          <div className="skeleton-promo-image"></div>
+        </div>
+
+        {/* Popular Items Skeleton */}
+        <h2 className="section-title">Most Popular</h2>
+        <div className="popular-list">
+          {[1, 2, 3].map(i => (
+            <SkeletonPopularCard key={i} />
+          ))}
+        </div>
+
+        {/* All Items Skeleton */}
+        <h2 className="section-title">All Items</h2>
+        <div className="menu-grid">
+          {[1, 2, 3, 4, 5, 6].map(i => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="menu-page">
+      {/* Header */}
+      <div className="menu-header">
+        <h1>Our Menu</h1>
+        <p>Discover our delicious selection of dishes</p>
+      </div>
+
       {/* Search */}
       <div className="search-bar">
         <FaSearch className="search-icon" />
-        <input type="text" placeholder="Search" />
+        <input 
+          type="text" 
+          placeholder="Search for dishes..." 
+          value={searchTerm}
+          onChange={handleSearch}
+        />
       </div>
 
       {/* Categories */}
       <div className="categories">
         {categories.map((cat, i) => (
-          <button key={i} className={`category ${i === 0 ? "active" : ""}`}>
+          <button 
+            key={i} 
+            className={`category ${activeCategory === cat ? "active" : ""}`}
+            onClick={() => setActiveCategory(cat)}
+          >
             {cat}
           </button>
         ))}
@@ -413,27 +599,92 @@ const Menu = () => {
           <p className="exclusive">Exclusive Offer</p>
           <h3>Buy 1 Get 1 Free</h3>
           <p>on all Pizza today</p>
+          <button className="promo-btn">Order Now</button>
         </div>
-<img src={pizza} width={100} ></img>
+        <img src={pizza} alt="Pizza promotion" />
       </div>
 
       {/* Popular Items */}
-      <h2 className="section-title">Popular</h2>
+      <h2 className="section-title">Most Popular</h2>
       <div className="popular-list">
         {popularItems.map((item) => (
           <div className="popular-card" key={item.id}>
-            <img src={item.img} alt={item.name} />
+            <div className="card-image">
+              <img src={item.img} alt={item.name} />
+              <button 
+                className={`favorite-btn ${favorites.has(item.id) ? 'active' : ''}`}
+                onClick={() => toggleFavorite(item.id)}
+              >
+                <FaHeart />
+              </button>
+            </div>
             <div className="card-info">
               <h4>{item.name}</h4>
-              <p>{item.price}</p>
-              <div className="rating">
-                <FaStar className="star" />
-                <span>{item.rating}</span>
+              <p className="description">{item.description}</p>
+              <div className="card-footer">
+                <div className="price-rating">
+                  <span className="price">{item.price}</span>
+                  <div className="rating">
+                    <FaStar className="star" />
+                    <span>{item.rating}</span>
+                  </div>
+                </div>
+                <button 
+                  className="add-to-cart-btn"
+                  onClick={() => handleAddToCart(item)}
+                  data-item-id={item.id}
+                >
+                  <FaPlus />
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* All Menu Items */}
+      <h2 className="section-title">All Items</h2>
+      <div className="menu-grid">
+        {filteredItems.map((item) => (
+          <div className="menu-card" key={item.id}>
+            <div className="card-image">
+              <img src={item.img} alt={item.name} />
+              <button 
+                className={`favorite-btn ${favorites.has(item.id) ? 'active' : ''}`}
+                onClick={() => toggleFavorite(item.id)}
+              >
+                <FaHeart />
+              </button>
+            </div>
+            <div className="card-info">
+              <h4>{item.name}</h4>
+              <p className="description">{item.description}</p>
+              <div className="card-footer">
+                <div className="price-rating">
+                  <span className="price">{item.price}</span>
+                  <div className="rating">
+                    <FaStar className="star" />
+                    <span>{item.rating}</span>
+                  </div>
+                </div>
+                <button 
+                  className="add-to-cart-btn"
+                  onClick={() => handleAddToCart(item)}
+                  data-item-id={item.id}
+                >
+                  <FaPlus />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredItems.length === 0 && (
+        <div className="no-results">
+          <p>No items found matching your search.</p>
+        </div>
+      )}
     </div>
   );
 };
